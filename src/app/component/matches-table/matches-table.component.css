@@ -40,3 +40,16 @@
   line-height: 25px;
   text-align: center;
 }
+
+.empty-space {
+  display: flex;
+  width: 90px;
+  height: 50px;
+}
+
+.subsection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}

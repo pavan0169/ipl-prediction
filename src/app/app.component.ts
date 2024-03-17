@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AuthService } from './shared/auth.service';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatchesTableComponent } from './component/matches-table/matches-table.component';
 
@@ -9,6 +10,22 @@ import { MatchesTableComponent } from './component/matches-table/matches-table.c
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  authService = inject(AuthService)
   title = 'IPL Predictions';
+
+  ngOnInit(): void {
+    this.authService.user$.subscribe(user => {
+      if (user) {
+        this.authService.currentUserSig.set({
+          email: user.email,
+          displayName: user.displayName,
+          userId: user.uid,
+        });
+      } else {
+        this.authService.currentUserSig.set(null);
+      }
+      console.log(this.authService.currentUserSig());
+    });
+  }
 }

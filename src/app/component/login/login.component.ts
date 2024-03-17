@@ -34,6 +34,8 @@ export class LoginComponent {
       this.auth.login(this.loginForm.value.username, this.loginForm.value.password).subscribe({
         next: () => {
           this.router.navigate(['/match-prediction']);
+        }, error: (err) => {
+          alert(err.code);
         }
       });
     }

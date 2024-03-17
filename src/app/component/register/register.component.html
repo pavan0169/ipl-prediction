@@ -8,15 +8,15 @@
       <mat-form-field class="user-field">
         <mat-label class="team-message">Display Name</mat-label>
         <input matInput placeholder="Displayname" formControlName="displayname">
-        <mat-error *ngIf="loginForm.controls['displayname'].invalid && loginForm.controls['displayname'].touched">
-          Please enter a valid username
+        <mat-error *ngIf="loginForm.controls['displayname'].invalid && loginForm.controls['displayname'].touched && loginForm.get('displayname')?.errors?.['invalidDisplayName']">
+          Display Name should not contain spaces or special characters.
         </mat-error>
       </mat-form-field>
       <mat-form-field class="user-field">
         <mat-label class="team-message">Email</mat-label>
         <input matInput placeholder="Username" formControlName="username">
         <mat-error *ngIf="loginForm.controls['username'].invalid && loginForm.controls['username'].touched">
-          Please enter a valid username
+          Please enter a valid email
         </mat-error>
       </mat-form-field>
       <mat-form-field  class="user-field">

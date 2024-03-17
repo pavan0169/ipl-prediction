@@ -1,9 +1,18 @@
 <div class="match-table-page">
-  <div class="subtitle-card">
-    <div class="subtitle">Match Predictions</div>
+  <div class="subsection">
+    <div class="empty-space">
+    </div>
+    <div class="subtitle-card">
+      <div class="subtitle">Match Predictions</div>
+    </div>
+    <app-menubar></app-menubar>
   </div>
   <div class="all-matches">
-    <app-match-card *ngFor="let x of matches.matches" [match]="x"></app-match-card>
+    <app-match-card *ngFor="let x of matches.matches"
+    [match]="x"
+    [currentUser]="authService.currentUserSig()?.displayName"
+    [uid]="authService.currentUserSig()?.userId"
+    ></app-match-card>
   </div>
 </div>
 
