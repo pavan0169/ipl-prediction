@@ -1,0 +1,40 @@
+<div class="match-card">
+  <p class="match-no">MATCH NO.: {{ match.match_no }}</p>
+  <p class="venue">{{ match.venue }}</p>
+  <p class="datetime">{{ match.dom }}, {{ match.time }}</p>
+  <p class="fixture">{{ match.fixture }}</p>
+  <div class="h-divider">
+    <div class="shadow"></div>
+  </div>
+  <div class="form-predection">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form-alignment">
+      <mat-form-field class="select-team-field">
+        <mat-label class="team-message">Team prediction</mat-label>
+        <mat-select formControlName="teamControl">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let team of selectTeam" [value]="team.value">{{ team.viewValue }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="teamControl.invalid && teamControl.touched">Please select a team</mat-error>
+      </mat-form-field>
+
+      <div class="score-pred">
+        <mat-form-field class="score-field">
+          <mat-label class="team-message">{{ team1 }} Score</mat-label>
+          <input matInput formControlName="team1PredScoreControl" placeholder="Enter a number">
+          <mat-error *ngIf="team1PredScoreControl.invalid && team1PredScoreControl.touched">
+            Please enter a valid number
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="score-field">
+          <mat-label class="team-message">{{ team2 }} Score</mat-label>
+          <input matInput formControlName="team2PredScoreControl" placeholder="Enter a number">
+          <mat-error *ngIf="team2PredScoreControl.invalid && team2PredScoreControl.touched">
+            Please enter a valid number
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button class="pred-submit" type="submit" [disabled]="formGroup.invalid">Submit</button>
+    </form>
+  </div>
+</div>

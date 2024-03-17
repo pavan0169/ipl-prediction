@@ -1,0 +1,35 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="subtitle-card">
+      <div class="subtitle">Login</div>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+      <br>
+      <br>
+      <mat-form-field class="user-field">
+        <mat-label class="team-message">Email</mat-label>
+        <input matInput placeholder="Username" formControlName="username">
+        <mat-error *ngIf="loginForm.controls['username'].invalid && loginForm.controls['username'].touched">
+          Please enter a valid username
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field  class="user-field">
+        <mat-label class="team-message">Password</mat-label>
+        <input matInput type="password" placeholder="Password" formControlName="password">
+        <mat-error *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched">
+          Please enter a valid password
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <div class="login-buttons">
+        <button mat-raised-button class="pred-submit" type="submit" [disabled]="loginForm.invalid">Login</button>
+        <button mat-button class="pred-reset" type="button" (click)="resetForm()">Reset</button>
+      </div>
+    </form>
+    <div class="login-register">
+      <span class="new-msg">New to the application?</span>
+      <button mat-raised-button class="register-btn" type="submit" (click)="navigateToRegister()">Register</button>
+    </div>
+  </div>
+</div>
