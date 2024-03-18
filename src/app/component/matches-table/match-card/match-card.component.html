@@ -1,5 +1,5 @@
 <div class="match-card">
-  <p class="match-no">MATCH NO.: {{ match.match_no }}</p>
+  <p class="match-no">MATCH: {{ match.match_no }}</p>
   <p class="venue">{{ match.venue }}</p>
   <p class="datetime">{{ match.dom }}, {{ match.time }}</p>
   <p class="fixture">{{ match.fixture }}</p>
@@ -34,10 +34,13 @@
         </mat-form-field>
       </div>
 
-      <button mat-raised-button class="pred-submit" type="submit" [disabled]="formGroup.invalid || alreadyPredicted || yetToOpen">Submit</button>
+      <button mat-raised-button class="pred-submit" type="submit"
+        [disabled]="formGroup.invalid || predictionQuotaCompleted || yetToOpen">Submit</button>
     </form>
   </div>
-  <div class="result-div" *ngIf="alreadyPredicted">
+  <div class="chance-status marg"><span *ngIf="matchClosed">Closed on:</span><span *ngIf="!matchClosed">Closes
+      on:</span> {{ closingDatetime | date:'MMM d, y, h:mm a' }}</div>
+  <div class="result-div" *ngIf="predictedData">
     <div class="pred-tag-status">Predicted</div>
     <div class="team-pred">Team: {{ predictedData.team_pred }}</div>
     <div class="score-pred-res">
@@ -45,6 +48,9 @@
       <div class="team-pred">{{ team2 }}: {{ predictedData.team_2_pred_scr }}</div>
     </div>
   </div>
-  <div *ngIf="!yetToOpen && !alreadyPredicted" class="tag-status">Predict now</div>
+  <div *ngIf="predictedData && !predictionQuotaCompleted" class="chance-status">*Only one chance left to change the
+    above values</div>
+  <div *ngIf="predictionQuotaCompleted" class="chance-status">*Change quota is completed</div>
+  <div *ngIf="!yetToOpen && !predictedData" class="tag-status">Predict now</div>
   <div *ngIf="yetToOpen" class="tag-status">Yet to open!</div>
 </div>

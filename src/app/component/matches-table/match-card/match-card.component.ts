@@ -59,12 +59,18 @@ export class MatchCardComponent implements OnInit {
 
   formGroup: FormGroup;
   fireStoreService = inject(FirestoreServiceService);
+  authService = inject(AuthService);
+  subDisp: string = '';
+  subUid: string = '';
+  custid2: string = '';
   match_id: string | null = null;
   custom_id: string | null = null;
+  closingDatetime: Date | null | undefined;
 
-  alreadyPredicted: boolean = false;
+  predictionQuotaCompleted: boolean = false;
   predictedData: any = null;
   yetToOpen: boolean = false;
+  matchClosed: boolean = false;
   matchService = inject(MatchesService);
 
   constructor() {
@@ -76,12 +82,19 @@ export class MatchCardComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.authService.user$.subscribe(user => {
+      this.subDisp = user?.displayName!;
+      this.subUid = user?.uid!;
+    })
     this.team1 = this.match.fixture.split(' ')[0];
     this.team2 = this.match.fixture.split(' ')[2];
     this.selectTeam.push({ value: this.team1, viewValue: this.team1 });
     this.selectTeam.push({ value: this.team2, viewValue: this.team2 });
     this.match_id = this.displayName + '_' + this.match.match_no + '_' + this.match.fixture.toLowerCase().replace(/\s+/g, '');
     this.custom_id = `${this.match_id}_${this.uid}`;
+    this.closingDatetime = this.getClosingDateTime(this.match.dom, this.match.time);
+    this.matchClosed = this.getClosedStatus();
+    console.log(this.closingDatetime);
     if (this.isDateBeforeNextSunday(this.match.dom)) {
       this.updateData(this.custom_id);
     } else {
@@ -93,15 +106,19 @@ export class MatchCardComponent implements OnInit {
   updateData(cid: string) {
     this.fireStoreService.getDocumentById(cid).subscribe((predicted_data) => {
       if (predicted_data) {
-        this.alreadyPredicted = true;
         this.predictedData = predicted_data;
-        this.formGroup.disable();
+        if (this.predictedData.updated_times >= 2) {
+          this.formGroup.disable();
+          this.predictionQuotaCompleted = true;
+        }
       }
     });
   }
 
   onSubmit() {
-    if (this.formGroup.valid && this.uid && !this.alreadyPredicted) {
+    const mid = this.subDisp + '_' + this.match.match_no + '_' + this.match.fixture.toLowerCase().replace(/\s+/g, '');
+    this.custid2 = `${mid}_${this.subUid}`;
+    if (this.formGroup.valid && this.uid && !this.predictionQuotaCompleted) {
       const newData = {
         match_no: this.match.match_no,
         name: this.displayName,
@@ -109,16 +126,17 @@ export class MatchCardComponent implements OnInit {
         team_2_pred_scr: this.team2PredScoreControl.value,
         team_pred: this.teamControl.value,
         user_id: this.uid,
+        updated_times: this.predictedData ? 2 : 1,
       };
       this.fireStoreService
-        .addCustomDocument(this.custom_id!, newData)
+        .addCustomDocument(this.custid2!, newData)
         .subscribe((data) => {
           this.updateData(data);
           alert('Your prediction is saved successfully! All the best.');
         });
       // Reset the form after submission if needed
       this.formGroup.reset();
-    } else if (this.alreadyPredicted) {
+    } else if (this.predictionQuotaCompleted) {
       this.formGroup.reset();
     } else {
       alert('Please login and start your prediction');
@@ -135,4 +153,21 @@ export class MatchCardComponent implements OnInit {
     const friday = new Date(today.getTime() + (7 + daysUntilNextFriday) * 24 * 60 * 60 * 1000); // Next Frida
     return date <= friday;
   }
+
+  getClosingDateTime(dom: string, time: string) {
+    const currentYear = new Date().getFullYear();
+    const istDateTimeString = `${dom} ${currentYear} ${time}`;
+    const istDateTime = new Date(istDateTimeString.replace(/-/g, '/').replace('IST', '+0530'));
+    istDateTime.setHours(istDateTime.getHours() - 24);
+    const localTime = istDateTime.toLocaleString(undefined, {
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+  });
+    return new Date(localTime);
+  }
+
+  getClosedStatus() {
+    return new Date() >= this.closingDatetime!;
+  }
+
+
 }
