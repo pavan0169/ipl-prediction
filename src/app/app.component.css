@@ -31,6 +31,6 @@
   flex-direction: column;
   align-items: center;
   background: linear-gradient(to right, rgb(145 65 117), #386ea8); /* Corrected */
-  opacity: 0.8;
+  opacity: 1;
   gap: 10px;
 }

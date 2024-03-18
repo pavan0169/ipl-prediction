@@ -10,8 +10,8 @@
   <div class="all-matches">
     <app-match-card *ngFor="let x of matches.matches"
     [match]="x"
-    [currentUser]="authService.currentUserSig()?.displayName"
-    [uid]="authService.currentUserSig()?.userId"
+    [displayName]="displayName"
+    [uid]="uid"
     ></app-match-card>
   </div>
 </div>

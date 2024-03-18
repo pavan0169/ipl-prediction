@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, collectionData, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData, doc, getDoc, query, setDoc, where } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 
 @Injectable({
@@ -15,9 +15,28 @@ export class FirestoreServiceService {
     return from(promise);
   }
 
+  getDocumentById(docId: string): Observable<any> {
+    const docRef = doc(this.predictionCollection, docId);
+    const promise = getDoc(docRef).then(docSnapshot => {
+        if (docSnapshot.exists()) {
+            return { id: docSnapshot.id, ...docSnapshot.data() };
+        } else {
+            return false;
+        }
+    });
+    return from(promise);
+}
+
   getAllDocuments(): Observable<any[]> {
     return collectionData(this.predictionCollection, {
       idField: 'id'
+    });
+  }
+
+  getUserDocuments(uid: string): Observable<any[]> {
+    const querySnapshot = query(this.predictionCollection, where('user_id', '==', uid));
+    return collectionData(querySnapshot, {
+        idField: 'id'
     });
   }
 }

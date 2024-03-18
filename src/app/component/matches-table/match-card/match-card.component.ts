@@ -39,7 +39,7 @@ interface Team {
 })
 export class MatchCardComponent implements OnInit {
   @Input() match: any;
-  @Input() currentUser: any;
+  @Input() displayName: any;
   @Input() uid: any;
 
   public selectTeam: Team[] = [];
@@ -61,9 +61,10 @@ export class MatchCardComponent implements OnInit {
   fireStoreService = inject(FirestoreServiceService);
   match_id: string | null = null;
   custom_id: string | null = null;
-  allPredictionData: any[] = [];
+
   alreadyPredicted: boolean = false;
   predictedData: any = null;
+  yetToOpen: boolean = false;
   matchService = inject(MatchesService);
 
   constructor() {
@@ -79,32 +80,31 @@ export class MatchCardComponent implements OnInit {
     this.team2 = this.match.fixture.split(' ')[2];
     this.selectTeam.push({ value: this.team1, viewValue: this.team1 });
     this.selectTeam.push({ value: this.team2, viewValue: this.team2 });
+    this.match_id = this.displayName + '_' + this.match.match_no + '_' + this.match.fixture.toLowerCase().replace(/\s+/g, '');
+    this.custom_id = `${this.match_id}_${this.uid}`;
+    if (this.isDateBeforeNextSunday(this.match.dom)) {
+      this.updateData(this.custom_id);
+    } else {
+      this.yetToOpen = true;
+      this.formGroup.disable();
+    }
+  }
 
-    this.fireStoreService.getAllDocuments().subscribe((docs) => {
-      this.allPredictionData = docs;
+  updateData(cid: string) {
+    this.fireStoreService.getDocumentById(cid).subscribe((predicted_data) => {
+      if (predicted_data) {
+        this.alreadyPredicted = true;
+        this.predictedData = predicted_data;
+        this.formGroup.disable();
+      }
     });
   }
 
   onSubmit() {
-    this.match_id =
-      this.currentUser +
-      '_' +
-      this.match.match_no +
-      '_' +
-      this.match.fixture.toLowerCase().replace(/\s+/g, '');
-    this.custom_id = `${this.match_id}_${this.uid}`;
-    console.log('Match id', this.custom_id);
-    this.allPredictionData.forEach((doc) => {
-      if (doc.id === this.custom_id) {
-        this.alreadyPredicted = true;
-        this.predictedData = doc;
-        return;
-      }
-    });
     if (this.formGroup.valid && this.uid && !this.alreadyPredicted) {
       const newData = {
         match_no: this.match.match_no,
-        name: this.currentUser,
+        name: this.displayName,
         team_1_pred_scr: this.team1PredScoreControl.value,
         team_2_pred_scr: this.team2PredScoreControl.value,
         team_pred: this.teamControl.value,
@@ -113,6 +113,7 @@ export class MatchCardComponent implements OnInit {
       this.fireStoreService
         .addCustomDocument(this.custom_id!, newData)
         .subscribe((data) => {
+          this.updateData(data);
           alert('Your prediction is saved successfully! All the best.');
         });
       // Reset the form after submission if needed
@@ -123,5 +124,15 @@ export class MatchCardComponent implements OnInit {
       alert('Please login and start your prediction');
       this.formGroup.reset();
     }
+  }
+
+  isDateBeforeNextSunday(dateString: string): boolean {
+    const [month, day] = dateString.split(' ');
+    const year = new Date().getFullYear();
+    const date = new Date(`${month} ${day}, ${year}`);
+    const today = new Date();
+    const daysUntilNextFriday = (7 - today.getDay() + 7) % 7; // Days until next Friday
+    const friday = new Date(today.getTime() + (7 + daysUntilNextFriday) * 24 * 60 * 60 * 1000); // Next Frida
+    return date <= friday;
   }
 }

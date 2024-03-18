@@ -34,15 +34,17 @@
         </mat-form-field>
       </div>
 
-      <button mat-raised-button class="pred-submit" type="submit" [disabled]="formGroup.invalid">Submit</button>
+      <button mat-raised-button class="pred-submit" type="submit" [disabled]="formGroup.invalid || alreadyPredicted || yetToOpen">Submit</button>
     </form>
   </div>
   <div class="result-div" *ngIf="alreadyPredicted">
-    <div class="already-predicted">Already Predicted</div>
+    <div class="pred-tag-status">Predicted</div>
     <div class="team-pred">Team: {{ predictedData.team_pred }}</div>
     <div class="score-pred-res">
       <div class="team-pred">{{ team1 }}: {{ predictedData.team_1_pred_scr }}</div>
       <div class="team-pred">{{ team2 }}: {{ predictedData.team_2_pred_scr }}</div>
     </div>
   </div>
+  <div *ngIf="!yetToOpen && !alreadyPredicted" class="tag-status">Predict now</div>
+  <div *ngIf="yetToOpen" class="tag-status">Yet to open!</div>
 </div>

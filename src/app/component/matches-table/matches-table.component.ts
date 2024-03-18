@@ -4,6 +4,7 @@ import { MatchCardComponent } from './match-card/match-card.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../shared/auth.service';
 import { MenubarComponent } from '../menubar/menubar.component';
+import { FirestoreServiceService } from '../../shared/firestore-service.service';
 
 @Component({
   selector: 'app-matches-table',
@@ -14,12 +15,15 @@ import { MenubarComponent } from '../menubar/menubar.component';
 })
 export class MatchesTableComponent implements OnInit{
   authService = inject(AuthService);
-  currentUser: string | null | undefined = null;
-  userId: string | null | undefined = null;
+  fireStoreService = inject(FirestoreServiceService);
+  displayName: string = '';
+  uid: string = '';
 
   constructor(public matches: MatchesService) {}
 
   ngOnInit(): void {
+    this.displayName = localStorage.getItem('displayName')!
+    this.uid = localStorage.getItem('uid')!
   }
 
 }

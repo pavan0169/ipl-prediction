@@ -25,6 +25,9 @@ export class AppComponent implements OnInit {
       } else {
         this.authService.currentUserSig.set(null);
       }
+      localStorage.setItem('uid', this.authService.currentUserSig().userId);
+      localStorage.setItem('email', this.authService.currentUserSig().email);
+      localStorage.setItem('displayName', this.authService.currentUserSig().displayName);
       console.log(this.authService.currentUserSig());
     });
   }
