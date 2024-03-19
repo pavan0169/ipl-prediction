@@ -15,20 +15,5 @@ export class AppComponent implements OnInit {
   title = 'IPL Predictions';
 
   ngOnInit(): void {
-    this.authService.user$.subscribe(user => {
-      if (user) {
-        this.authService.currentUserSig.set({
-          email: user.email,
-          displayName: user.displayName,
-          userId: user.uid,
-        });
-      } else {
-        this.authService.currentUserSig.set(null);
-      }
-      localStorage.setItem('uid', this.authService.currentUserSig().userId);
-      localStorage.setItem('email', this.authService.currentUserSig().email);
-      localStorage.setItem('displayName', this.authService.currentUserSig().displayName);
-      console.log(this.authService.currentUserSig());
-    });
   }
 }

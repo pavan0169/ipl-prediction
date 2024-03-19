@@ -6,7 +6,7 @@
   gap: 10px;
 }
 
-.subtitle-card, .login-card {
+.subtitle-card, .login-card, .dashboard, .dashboard-ttl-card {
   display: flex;
   width: 95%;
   height: 60px;
@@ -39,7 +39,7 @@
   border-radius: 40px;
 }
 
-.subtitle-card {
+.subtitle-card, .dashboard-ttl-card {
   margin-top: 10px;
 }
 
@@ -88,4 +88,21 @@
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+}
+
+.dashboard {
+  height: 200px;
+  gap: 10px
+}
+
+.dashboard-ttl-card {
+  width: 100%;
+  margin: 0px;
+  height: 50px
+}
+
+.dec-size {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
 }

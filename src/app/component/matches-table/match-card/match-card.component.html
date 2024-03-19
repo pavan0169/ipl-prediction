@@ -35,7 +35,7 @@
       </div>
 
       <button mat-raised-button class="pred-submit" type="submit"
-        [disabled]="formGroup.invalid || predictionQuotaCompleted || yetToOpen">Submit</button>
+        [disabled]="formGroup.invalid || predictionQuotaCompleted || yetToOpen || matchClosed">Submit</button>
     </form>
   </div>
   <div class="chance-status marg"><span *ngIf="matchClosed">Closed on:</span><span *ngIf="!matchClosed">Closes

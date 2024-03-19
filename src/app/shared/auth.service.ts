@@ -8,7 +8,6 @@ import { Observable, from } from 'rxjs';
 export class AuthService {
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
-  currentUserSig = signal<any | null | undefined>(undefined)
 
   login(email: string, password: string): Observable<void> {
     const promise = signInWithEmailAndPassword(
@@ -29,7 +28,7 @@ export class AuthService {
   }
 
   logout(): Observable<void> {
-    const promise = signOut(this.firebaseAuth);
+    const promise = signOut(this.firebaseAuth).then(() => {});
     return from(promise);
   }
 }

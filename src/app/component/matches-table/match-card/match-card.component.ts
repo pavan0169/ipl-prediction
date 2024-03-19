@@ -39,8 +39,6 @@ interface Team {
 })
 export class MatchCardComponent implements OnInit {
   @Input() match: any;
-  @Input() displayName: any;
-  @Input() uid: any;
 
   public selectTeam: Team[] = [];
   public team1: string = '';
@@ -62,7 +60,6 @@ export class MatchCardComponent implements OnInit {
   authService = inject(AuthService);
   subDisp: string = '';
   subUid: string = '';
-  custid2: string = '';
   match_id: string | null = null;
   custom_id: string | null = null;
   closingDatetime: Date | null | undefined;
@@ -82,29 +79,31 @@ export class MatchCardComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.authService.user$.subscribe(user => {
-      this.subDisp = user?.displayName!;
-      this.subUid = user?.uid!;
-    })
     this.team1 = this.match.fixture.split(' ')[0];
     this.team2 = this.match.fixture.split(' ')[2];
     this.selectTeam.push({ value: this.team1, viewValue: this.team1 });
     this.selectTeam.push({ value: this.team2, viewValue: this.team2 });
-    this.match_id = this.displayName + '_' + this.match.match_no + '_' + this.match.fixture.toLowerCase().replace(/\s+/g, '');
-    this.custom_id = `${this.match_id}_${this.uid}`;
     this.closingDatetime = this.getClosingDateTime(this.match.dom, this.match.time);
     this.matchClosed = this.getClosedStatus();
-    console.log(this.closingDatetime);
-    if (this.isDateBeforeNextSunday(this.match.dom)) {
-      this.updateData(this.custom_id);
-    } else {
-      this.yetToOpen = true;
+    if (this.matchClosed) {
       this.formGroup.disable();
     }
+    this.authService.user$.subscribe(user => {
+      this.subDisp = user?.displayName!;
+      this.subUid = user?.uid!;
+      this.match_id = this.subDisp + '_' + this.match.match_no + '_' + this.match.fixture.toLowerCase().replace(/\s+/g, '');
+      this.custom_id = `${this.match_id}_${this.subUid}`;
+      if (this.isDateBeforeNextSunday(this.match.dom)) {
+        this.updateData(this.custom_id);
+      } else {
+        this.yetToOpen = true;
+        this.formGroup.disable();
+      }
+    })
   }
 
   updateData(cid: string) {
-    this.fireStoreService.getDocumentById(cid).subscribe((predicted_data) => {
+        this.fireStoreService.getDocumentById(cid).subscribe((predicted_data) => {
       if (predicted_data) {
         this.predictedData = predicted_data;
         if (this.predictedData.updated_times >= 2) {
@@ -116,20 +115,18 @@ export class MatchCardComponent implements OnInit {
   }
 
   onSubmit() {
-    const mid = this.subDisp + '_' + this.match.match_no + '_' + this.match.fixture.toLowerCase().replace(/\s+/g, '');
-    this.custid2 = `${mid}_${this.subUid}`;
-    if (this.formGroup.valid && this.uid && !this.predictionQuotaCompleted) {
+    if (this.formGroup.valid && this.subUid && !this.predictionQuotaCompleted) {
       const newData = {
         match_no: this.match.match_no,
-        name: this.displayName,
+        name: this.subDisp,
         team_1_pred_scr: this.team1PredScoreControl.value,
         team_2_pred_scr: this.team2PredScoreControl.value,
         team_pred: this.teamControl.value,
-        user_id: this.uid,
+        user_id: this.subUid,
         updated_times: this.predictedData ? 2 : 1,
       };
       this.fireStoreService
-        .addCustomDocument(this.custid2!, newData)
+        .addCustomDocument(this.custom_id!, newData)
         .subscribe((data) => {
           this.updateData(data);
           alert('Your prediction is saved successfully! All the best.');

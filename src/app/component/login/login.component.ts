@@ -49,4 +49,8 @@ export class LoginComponent {
     this.router.navigate(['/register']);
   }
 
+  navigateToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
+
 }

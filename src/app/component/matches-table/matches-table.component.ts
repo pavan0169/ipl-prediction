@@ -15,16 +15,10 @@ import { ScrollToTopComponent } from '../scroll-to-top/scroll-to-top.component';
   styleUrl: './matches-table.component.css'
 })
 export class MatchesTableComponent implements OnInit{
-  authService = inject(AuthService);
-  fireStoreService = inject(FirestoreServiceService);
-  displayName: string = '';
-  uid: string = '';
 
   constructor(public matches: MatchesService) {}
 
   ngOnInit(): void {
-    this.displayName = localStorage.getItem('displayName')!
-    this.uid = localStorage.getItem('uid')!
   }
 
 }
