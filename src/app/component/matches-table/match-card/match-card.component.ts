@@ -1,3 +1,4 @@
+import { DashboardService } from './../../../shared/dashboard.service';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
@@ -58,6 +59,7 @@ export class MatchCardComponent implements OnInit {
   formGroup: FormGroup;
   fireStoreService = inject(FirestoreServiceService);
   authService = inject(AuthService);
+  dashboardService = inject(DashboardService);
   subDisp: string = '';
   subUid: string = '';
   match_id: string | null = null;
@@ -93,7 +95,7 @@ export class MatchCardComponent implements OnInit {
       this.subUid = user?.uid!;
       this.match_id = this.subDisp + '_' + this.match.match_no + '_' + this.match.fixture.toLowerCase().replace(/\s+/g, '');
       this.custom_id = `${this.match_id}_${this.subUid}`;
-      if (this.isDateBeforeNextSunday(this.match.dom)) {
+      if (this.dashboardService.isDateBeforeNextSunday(this.match.dom)) {
         this.updateData(this.custom_id);
       } else {
         this.yetToOpen = true;
@@ -141,25 +143,15 @@ export class MatchCardComponent implements OnInit {
     }
   }
 
-  isDateBeforeNextSunday(dateString: string): boolean {
-    const [month, day] = dateString.split(' ');
-    const year = new Date().getFullYear();
-    const date = new Date(`${month} ${day}, ${year}`);
-    const today = new Date();
-    const daysUntilNextFriday = (7 - today.getDay() + 7) % 7; // Days until next Friday
-    const friday = new Date(today.getTime() + (7 + daysUntilNextFriday) * 24 * 60 * 60 * 1000); // Next Frida
-    return date <= friday;
-  }
-
   getClosingDateTime(dom: string, time: string) {
     const currentYear = new Date().getFullYear();
     const istDateTimeString = `${dom} ${currentYear} ${time}`;
     const istDateTime = new Date(istDateTimeString.replace(/-/g, '/').replace('IST', '+0530'));
     istDateTime.setHours(istDateTime.getHours() - 24);
-    const localTime = istDateTime.toLocaleString(undefined, {
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
-  });
-    return new Date(localTime);
+  //   const localTime = istDateTime.toLocaleString(undefined, {
+  //     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+  // });
+    return new Date(istDateTime);
   }
 
   getClosedStatus() {

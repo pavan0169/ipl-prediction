@@ -8,8 +8,8 @@ export interface Match {
   venue: string;
   time: string;
   winning_team?: string;
-  team1_score?: string;
-  team2_score?: string;
+  team1_score?: number;
+  team2_score?: number;
 }
 
 export interface User {
@@ -49,6 +49,26 @@ export class MatchesService {
       user_id: 'M3aVVTaNRtaI2gJIKWcCdHecI7z1',
       displayName: 'sasiRoyals'
     },
+    {
+      user_id: 'cfmUhC5EBTMsOWT3v0C35W5I7eE2',
+      displayName: 'Madhuri'
+    },
+    {
+      user_id: 'zM1Y2gNmaoftV6zh5JIrwLoLd3d2',
+      displayName: 'Uday'
+    },
+    {
+      user_id: 'jmJb6bjmnXUnl5YCZCV2W7iJ6Bv1',
+      displayName: 'Revanth'
+    },
+    {
+      user_id: 'PYoUxlm184OKyfFvojU7UcdTkKQ2',
+      displayName: 'RamanaMurthy'
+    },
+    {
+      user_id: 'k2pzPexRdhTd3ozyUNTHG6GwMvB2',
+      displayName: 'Upendra'
+    }
   ]
 
   public matches: Match[] = [
@@ -59,8 +79,8 @@ export class MatchesService {
       "venue": "Chennai",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 2,
@@ -69,8 +89,8 @@ export class MatchesService {
       "venue": "Mohali",
       "time": "3:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 3,
@@ -79,8 +99,8 @@ export class MatchesService {
       "venue": "Kolkata",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 4,
@@ -89,8 +109,8 @@ export class MatchesService {
       "venue": "Jaipur",
       "time": "3:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 5,
@@ -99,8 +119,8 @@ export class MatchesService {
       "venue": "Ahmedabad",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 6,
@@ -109,8 +129,8 @@ export class MatchesService {
       "venue": "Bengaluru",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 7,
@@ -119,8 +139,8 @@ export class MatchesService {
       "venue": "Chennai",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 8,
@@ -129,8 +149,8 @@ export class MatchesService {
       "venue": "Hyderabad",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 9,
@@ -139,8 +159,8 @@ export class MatchesService {
       "venue": "Jaipur",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 10,
@@ -149,8 +169,8 @@ export class MatchesService {
       "venue": "Bengaluru",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 11,
@@ -159,8 +179,8 @@ export class MatchesService {
       "venue": "Lucknow",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 12,
@@ -169,8 +189,8 @@ export class MatchesService {
       "venue": "Ahmedabad",
       "time": "3:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 13,
@@ -179,8 +199,8 @@ export class MatchesService {
       "venue": "Visakhapatnam",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 14,
@@ -189,8 +209,8 @@ export class MatchesService {
       "venue": "Mumbai",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 15,
@@ -199,8 +219,8 @@ export class MatchesService {
       "venue": "Bengaluru",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 16,
@@ -209,8 +229,8 @@ export class MatchesService {
       "venue": "Visakhapatnam",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 17,
@@ -219,8 +239,8 @@ export class MatchesService {
       "venue": "Ahmedabad",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 18,
@@ -229,8 +249,8 @@ export class MatchesService {
       "venue": "Hyderabad",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 19,
@@ -239,8 +259,8 @@ export class MatchesService {
       "venue": "Jaipur",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 20,
@@ -249,8 +269,8 @@ export class MatchesService {
       "venue": "Mumbai",
       "time": "3:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     },
     {
       "match_no": 21,
@@ -259,8 +279,8 @@ export class MatchesService {
       "venue": "Lucknow",
       "time": "7:30 PM IST",
       "winning_team": "",
-      "team1_score": "",
-      "team2_score": ""
+      "team1_score": 0,
+      "team2_score": 0
     }
   ]
 

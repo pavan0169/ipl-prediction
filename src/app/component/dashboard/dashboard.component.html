@@ -1,1 +1,43 @@
-<p>Rukho Jara. Please wait. Still under progress.</p>
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" class="match-card">
+
+    <!-- Match No Column -->
+    <ng-container matColumnDef="match_no" sticky>
+      <th mat-header-cell *matHeaderCellDef class="header to-center"> Match No </th>
+      <td mat-cell *matCellDef="let element" class="id-column to-center"> {{element.match_no}} </td>
+    </ng-container>
+
+    <!-- Match Column -->
+    <ng-container matColumnDef="match" sticky>
+      <th mat-header-cell *matHeaderCellDef class="header name-column"> Match </th>
+      <td mat-cell *matCellDef="let element" class="id-column"> {{element.match}} </td>
+    </ng-container>
+
+    <!-- Winning Team Column -->
+    <ng-container matColumnDef="winning_team">
+      <th mat-header-cell *matHeaderCellDef class="header name-column"> Winning Team </th>
+      <td mat-cell *matCellDef="let element"> {{element.winning_team}} </td>
+    </ng-container>
+
+    <!-- Team 1 Score Column -->
+    <ng-container matColumnDef="team1_score">
+      <th mat-header-cell *matHeaderCellDef class="header name-column"> Team 1 Score </th>
+      <td mat-cell *matCellDef="let element"> {{element.team1_score}} </td>
+    </ng-container>
+
+    <!-- Team 2 Score Column -->
+    <ng-container matColumnDef="team2_score">
+      <th mat-header-cell *matHeaderCellDef class="header name-column"> Team 2 Score </th>
+      <td mat-cell *matCellDef="let element"> {{element.team2_score}} </td>
+    </ng-container>
+
+    <!-- Dynamically Generated Prediction Columns -->
+    <ng-container *ngFor="let key of dynamicColumns" [matColumnDef]="key">
+      <th mat-header-cell *matHeaderCellDef class="header name-column"> {{getColumnName(key)}} </th>
+      <td mat-cell *matCellDef="let element"> {{element[key]}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
