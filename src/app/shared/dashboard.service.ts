@@ -12,6 +12,9 @@ export class DashboardService {
   matchsService = inject(MatchesService)
 
   createDataSource(predictions: any[]) {
+    if (predictions.length < 2) {
+      predictions = JSON.parse(localStorage.getItem('predictionData')!);
+    }
     const matches = this.matchsService.matches;
     const users = this.matchsService.users;
     let dashboardData: any[] = [];
@@ -53,6 +56,95 @@ export class DashboardService {
     });
 
     return dashboardData;
+  }
+
+  calculateTotalPoints(predictions: any[]): any[] {
+    if (predictions.length < 2) {
+      predictions = JSON.parse(localStorage.getItem('predictionData')!);
+    }
+    const matches = this.matchsService.matches;
+    const users = this.matchsService.users;
+    let userPointsMap: { [userId: string]: number } = {};
+
+    for (let user of users) {
+      userPointsMap[user.user_id] = 0;
+    }
+
+    for (let match of matches) {
+      if (match.winning_team && match.team1_score && match.team2_score) {
+        let matchPredictions = predictions.filter(prediction => prediction.match_no === match.match_no);
+
+        for (let prediction of matchPredictions) {
+          const teamPoints = this.userPredictionWithMatch(prediction.team_pred, match.winning_team);
+          const scr1Points = this.userPredictionWithScore(prediction.team_1_pred_scr, match.team1_score);
+          const scr2Points = this.userPredictionWithScore(prediction.team_2_pred_scr, match.team2_score);
+
+          const totalMatchPoints = teamPoints + scr1Points + scr2Points;
+
+          userPointsMap[prediction.user_id] += totalMatchPoints;
+        }
+      }
+    }
+
+    let result = [];
+
+    for (let user of users) {
+      result.push({
+        user_id: user.user_id,
+        displayName: user.displayName,
+        total_points: userPointsMap[user.user_id]
+      });
+    }
+
+    return result;
+  }
+
+  matchWiseBreakup(predictions: any[]): any[] {
+    if (predictions.length < 2) {
+      predictions = JSON.parse(localStorage.getItem('predictionData')!);
+    }
+    const dataSource: any[] = [];
+    const matches = this.matchsService.matches;
+    const users = this.matchsService.users;
+
+    matches.forEach((match) => {
+      const matchPredictions = predictions.filter(prediction => prediction.match_no === match.match_no);
+      const rows: any[] = [];
+
+      users.forEach((user) => {
+        const userPrediction = matchPredictions.find(prediction => prediction.user_id === user.user_id) || {
+          team_1_pred_scr: '',
+          team_2_pred_scr: '',
+          team_pred: '',
+          updated_times: 0
+        };
+        const teamPoints = this.userPredictionWithMatch(userPrediction.team_pred, match.winning_team);
+        const scr1Points = this.userPredictionWithScore(userPrediction.team_1_pred_scr, match.team1_score);
+        const scr2Points = this.userPredictionWithScore(userPrediction.team_2_pred_scr, match.team2_score);
+
+        rows.push({
+          user_id: user.user_id,
+          displayName: user.displayName,
+          team_1_pred_scr: userPrediction.team_1_pred_scr,
+          team_2_pred_scr: userPrediction.team_2_pred_scr,
+          team_pred: userPrediction.team_pred,
+          updated_times: userPrediction.updated_times,
+          points: teamPoints + scr1Points + scr2Points,
+        });
+      });
+
+      dataSource.push({
+        match_no: match.match_no,
+        match_api_name: match.match_api_name,
+        fixture: match.fixture,
+        dom: match.dom,
+        venue: match.venue,
+        time: match.time,
+        rows: rows
+      });
+    });
+
+    return dataSource;
   }
 
   userPredictionWithScore(pred_scr: number, act_scr: number | undefined): any {

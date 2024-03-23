@@ -1,8 +1,8 @@
 .table-container {
   overflow-x: auto;
-  width: 90vw;
-  height: 84vh;
-  margin-bottom: 60px;
+  width: 375px;
+  height: fit-content;
+  margin-bottom: 20vh;
   border-radius: 20px;
   background-color: #c1c1c1;
   box-shadow: 20px 20px 60px
@@ -22,17 +22,4 @@ th {
   box-shadow: 20px 20px 60px
   #00000069,inset -20px -20px
   60px #616a99;
-}
-
-.header {
-  min-width: 90px;
-}
-
-.id-column {
-  font-weight: 500;
-}
-
-.to-center {
-  text-align: center;
-  min-width: 20px;
 }

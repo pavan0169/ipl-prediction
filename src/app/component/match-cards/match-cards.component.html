@@ -1,0 +1,48 @@
+<div *ngFor="let match of dataSource" class="match-first">
+  <div class="dashboard-ttl-card">
+    <div class="subtitle">{{ match.match_api_name }}</div>
+  </div>
+  <div class="table-container">
+    <table mat-table [dataSource]="match.rows" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="rank" sticky>
+        <th mat-header-cell *matHeaderCellDef class="header"> Rank </th>
+        <td mat-cell *matCellDef="let element"> {{ element.rank }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="displayName" sticky>
+        <th mat-header-cell *matHeaderCellDef class="header"> User </th>
+        <td mat-cell *matCellDef="let element"> {{ element.displayName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="team_1_pred_scr">
+        <th mat-header-cell *matHeaderCellDef class="header"> Team 1 Prediction Score </th>
+        <td mat-cell *matCellDef="let element"> {{ element.team_1_pred_scr }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="team_2_pred_scr">
+        <th mat-header-cell *matHeaderCellDef class="header"> Team 2 Prediction Score </th>
+        <td mat-cell *matCellDef="let element"> {{ element.team_2_pred_scr }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="team_pred">
+        <th mat-header-cell *matHeaderCellDef class="header"> Predicted Winner </th>
+        <td mat-cell *matCellDef="let element"> {{ element.team_pred }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="updated_times">
+        <th mat-header-cell *matHeaderCellDef class="header"> Updated Times </th>
+        <td mat-cell *matCellDef="let element"> {{ element.updated_times }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="points">
+        <th mat-header-cell *matHeaderCellDef class="header"> Match Points </th>
+        <td mat-cell *matCellDef="let element"> {{ element.points }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </div>
+</div>

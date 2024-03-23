@@ -3,6 +3,7 @@ import { DashboardService } from '../../shared/dashboard.service';
 import { FirestoreServiceService } from '../../shared/firestore-service.service';
 import { CommonModule } from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
+import { MatchesService } from '../../shared/matches.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +16,7 @@ export class DashboardComponent implements OnInit {
 
   dashboardService = inject(DashboardService)
   firestoreService = inject(FirestoreServiceService)
+  matchService = inject(MatchesService)
 
   dataSource: any[] = []
   displayedColumns: string[] = [
@@ -27,15 +29,14 @@ export class DashboardComponent implements OnInit {
   dynamicColumns: string[] = []; // To store dynamically generated columns
 
   ngOnInit(): void {
-    this.firestoreService.getAllDocuments().subscribe((data) => {
-      this.dataSource = this.dashboardService.createDataSource(data);
-      if (this.dataSource.length > 0) {
-        this.dynamicColumns = Object.keys(this.dataSource[0]).filter(key =>
-          !this.displayedColumns.includes(key)
-        );
-        this.displayedColumns = this.displayedColumns.concat(this.dynamicColumns);
-      }
-    });
+    const predictionData = this.matchService.playerPredictionData$.getValue();
+    this.dataSource = this.dashboardService.createDataSource(predictionData);
+    if (this.dataSource.length > 0) {
+      this.dynamicColumns = Object.keys(this.dataSource[0]).filter(key =>
+        !this.displayedColumns.includes(key)
+      );
+      this.displayedColumns = this.displayedColumns.concat(this.dynamicColumns);
+    }
   }
 
   getColumnName(input: string): string {
@@ -61,7 +62,6 @@ export class DashboardComponent implements OnInit {
         const [, username] = matchPointsMatch;
         return `${username} Match Points`;
     } else {
-        // If no pattern matches, return the input string as is
         return input;
     }
   }

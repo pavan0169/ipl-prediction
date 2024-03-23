@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators, FormGroup, FormBuilder} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
+import { DashboardService } from '../../shared/dashboard.service';
+import { FirestoreServiceService } from '../../shared/firestore-service.service';
+import { MatchesService } from '../../shared/matches.service';
 
 
 @Component({
@@ -17,6 +20,18 @@ import { AuthService } from '../../shared/auth.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  dashboardService = inject(DashboardService)
+  firestoreService = inject(FirestoreServiceService)
+  matchService = inject(MatchesService)
+
+  dataSource: any[] = []
+  displayedColumns: string[] = [
+    'match_no',
+    'match',
+    'winning_team',
+    'team1_score',
+    'team2_score'
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,7 +65,11 @@ export class LoginComponent {
   }
 
   navigateToDashboard() {
-    this.router.navigate(['/dashboard']);
+    this.firestoreService.getAllDocuments().subscribe((data) => {
+      this.matchService.playerPredictionData$.next(data);
+      localStorage.setItem('predictionData', JSON.stringify(data));
+    });
+    this.router.navigate(['/home']);
   }
 
 }
