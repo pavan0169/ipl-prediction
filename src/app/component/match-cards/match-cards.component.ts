@@ -25,6 +25,9 @@ export class MatchCardsComponent {
     'points',
   ];
 
+  team1: string = ''
+  team2: string = ''
+
   constructor(private dasboardService: DashboardService) {}
 
   ngOnInit(): void {
@@ -37,6 +40,8 @@ export class MatchCardsComponent {
       match.rows.forEach((row: any, index: number) => {
         row.rank = index + 1; // Numbering starts from 1
       });
+      this.team1 = match.fixture.split(' ')[0];
+      this.team2 = match.fixture.split(' ')[2];
     });
   }
 }
