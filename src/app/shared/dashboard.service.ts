@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { FirestoreServiceService } from './firestore-service.service';
 import { MatchesService } from './matches.service';
 import { Injectable, inject } from '@angular/core';
@@ -10,6 +11,7 @@ export class DashboardService {
   constructor() { }
 
   matchsService = inject(MatchesService)
+  http = inject(HttpClient)
 
   createDataSource(predictions: any[]) {
     if (predictions.length < 2) {
