@@ -168,7 +168,7 @@ export class MatchesService {
       venue: 'Hyderabad',
       time: '7:30 PM IST',
       winning_team: 'SRH',
-      team1_score: 227,
+      team1_score: 277,
       team2_score: 246,
     },
     {
