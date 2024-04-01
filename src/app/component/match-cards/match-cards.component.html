@@ -1,6 +1,13 @@
 <div *ngFor="let match of dataSource" class="match-first">
   <div class="dashboard-ttl-card">
     <div class="subtitle">{{ match.match_api_name }}</div>
+    <div class="subtitle">{{ match.dom + ', ' + match.time }}</div>
+  </div>
+  <div class="dashboard-ttl-card widthfix" *ngIf="match.status">
+    <div class="subtitle smalltext">{{ match.status.t1 + ': ' + match.status.t1s }}</div>
+    <div class="subtitle smalltext">{{ match.status.t2 + ': ' + match.status.t2s }}</div>
+    <div class="subtitle smalltext">{{ match.status.status }}</div>
+    <div class="subtitle smalltext">{{ "Last updated at: " + updatedDate() }}</div>
   </div>
   <div class="table-container">
     <table mat-table [dataSource]="match.rows" class="mat-elevation-z8">
@@ -37,7 +44,7 @@
 
       <ng-container matColumnDef="points">
         <th mat-header-cell *matHeaderCellDef class="header"> Match Points </th>
-        <td mat-cell *matCellDef="let element"> {{ element.points }} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.points || 0 }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>

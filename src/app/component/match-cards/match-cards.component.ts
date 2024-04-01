@@ -29,10 +29,14 @@ export class MatchCardsComponent {
   team2: string = ''
 
   constructor(private dasboardService: DashboardService) {}
+  matchsService = inject(MatchesService)
+  lastUpdated: number = 0;
 
   ngOnInit(): void {
     const predictionData = this.matchService.playerPredictionData$.getValue();
-    this.dataSource = this.dasboardService.matchWiseBreakup(predictionData);
+    const matches = this.matchsService.matches;
+    const currentMatches = matches.filter(match => this.isReleventMatch(match.dom));
+    this.dataSource = this.dasboardService.matchWiseBreakup(predictionData, currentMatches);
 
     // Sort dataSource based on points in descending order and add rank
     this.dataSource.forEach(match => {
@@ -43,5 +47,25 @@ export class MatchCardsComponent {
       this.team1 = match.fixture.split(' ')[0];
       this.team2 = match.fixture.split(' ')[2];
     });
+  }
+
+  updatedDate(): string {
+    const epochTimestamp = parseInt(localStorage.getItem('lastFetchedTimestamp')!);
+    const date = new Date(epochTimestamp); // Convert from seconds to milliseconds
+    return date.toLocaleString() // Convert to a human-readable date string
+  }
+
+  isReleventMatch(dateString: string): boolean {
+    const [month, day] = dateString.split(' ');
+    const year = new Date().getFullYear();
+    const date = new Date(`${month} ${day}, ${year}`);
+    const currentDate = new Date();
+
+    const threeDaysAgo = new Date(currentDate);
+    threeDaysAgo.setDate(currentDate.getDate() - 3);
+
+    const fiveDaysLater = new Date(currentDate);
+    fiveDaysLater.setDate(currentDate.getDate() + 7);
+    return date >= threeDaysAgo && date <= fiveDaysLater;
   }
 }

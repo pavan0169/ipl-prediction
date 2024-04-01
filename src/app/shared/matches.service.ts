@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, Subject, interval } from 'rxjs';
 
 export interface Match {
   api_id: string;
@@ -12,6 +13,7 @@ export interface Match {
   winning_team?: string;
   team1_score?: number;
   team2_score?: number;
+  status?: any;
 }
 
 export interface User {
@@ -179,9 +181,9 @@ export class MatchesService {
       dom: 'March 28',
       venue: 'Jaipur',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'RR',
+      team1_score: 185,
+      team2_score: 173,
     },
     {
       api_id: '0541f48b-fd49-46cf-9cfe-8b5998761e04',
@@ -191,9 +193,9 @@ export class MatchesService {
       dom: 'March 29',
       venue: 'Bengaluru',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'KKR',
+      team1_score: 182,
+      team2_score: 186,
     },
     {
       api_id: '66a4be49-d980-42a5-a2a5-251907cbbaf3',
@@ -203,9 +205,9 @@ export class MatchesService {
       dom: 'March 30',
       venue: 'Lucknow',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'LSG',
+      team1_score: 199,
+      team2_score: 178,
     },
     {
       api_id: '14bdf792-cb62-4bc4-b136-c070e15885ac',
@@ -215,9 +217,9 @@ export class MatchesService {
       dom: 'March 31',
       venue: 'Ahmedabad',
       time: '3:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'GT',
+      team1_score: 168,
+      team2_score: 162,
     },
     {
       api_id: 'a7611f25-482a-498c-a424-a4523cd92ffe',
@@ -227,9 +229,9 @@ export class MatchesService {
       dom: 'March 31',
       venue: 'Visakhapatnam',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'DC',
+      team1_score: 191,
+      team2_score: 171,
     },
     {
       api_id: 'd179876c-6b2d-4d39-9931-c8fcbefb4456',
@@ -239,9 +241,9 @@ export class MatchesService {
       dom: 'April 1',
       venue: 'Mumbai',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'RR',
+      team1_score: 125,
+      team2_score: 127,
     },
     {
       api_id: '90e60cb7-57f1-4ce3-9104-ff8ed0119f4b',
@@ -941,5 +943,111 @@ export class MatchesService {
     },
   ];
 
-  constructor() {}
+  private apiUrl =
+    'https://api.cricapi.com/v1/cricScore?apikey=6b92c4a6-47fb-4764-b42a-9278f3278d63';
+  private lastFetchedDataKey = 'lastFetchedData';
+  private lastFetchedTimestampKey = 'lastFetchedTimestamp';
+
+  constructor(private http: HttpClient) {
+    // Fetch initial data when the service is instantiated
+    this.updateMatchScoresAndWinners();
+    interval(7 * 60 * 1000) // 7 minutes in milliseconds
+      .subscribe(() => {
+        const currentTime = new Date();
+        const currentHour = currentTime.getUTCHours() + 5.5; // IST is UTC+5.5
+        const currentMinute = currentTime.getUTCMinutes();
+        if (
+          (currentHour === 15 && currentMinute >= 30) ||
+          (currentHour > 15 && currentHour < 24) ||
+          (currentHour === 1 && currentMinute <= 0)
+        ) {
+          this.updateMatchScoresAndWinners();
+        } else {
+          console.log('--- Not fetching the data ---');
+        }
+      });
+  }
+
+  private updateMatchScoresAndWinners(): void {
+    const lastFetchedTimestamp = localStorage.getItem(
+      this.lastFetchedTimestampKey
+    );
+    const currentTime = new Date().getTime();
+
+    // Check if 15 minutes have passed since the last fetch
+    if (
+      !lastFetchedTimestamp ||
+      currentTime - parseInt(lastFetchedTimestamp, 10) >= 7 * 60 * 1000
+    ) {
+      this.http.get<any>(this.apiUrl).subscribe(
+        (data) => {
+          localStorage.setItem(
+            this.lastFetchedDataKey,
+            JSON.stringify(data.data)
+          );
+          localStorage.setItem(
+            this.lastFetchedTimestampKey,
+            currentTime.toString()
+          );
+          console.log('fresh fetch: ', lastFetchedTimestamp);
+          this.updateMatchesWithApiData(data.data);
+        },
+        (error) => {
+          alert('FAILED TO FETCH THE MATCH RESULT DATA'), console.log(error);
+        }
+      );
+    } else {
+      // Use the data from local storage if 15 minutes haven't passed
+      const data = JSON.parse(localStorage.getItem(this.lastFetchedDataKey)!);
+      console.log('already fetched at: ', lastFetchedTimestamp);
+      this.updateMatchesWithApiData(data);
+    }
+  }
+
+  private updateMatchesWithApiData(data: any): void {
+    this.matches.forEach((match) => {
+      const apiMatch = data.find(
+        (apiMatch: any) => apiMatch.id === match.api_id
+      );
+      if (apiMatch) {
+        this.generalizeApiData(apiMatch, match);
+        match.team1_score = this.extractScore(apiMatch.t1s);
+        match.team2_score = this.extractScore(apiMatch.t2s);
+        match.winning_team = !apiMatch.status.includes('won') ? '' : this.determineWinner(match.fixture, match.team1_score, match.team2_score);
+        match.status = {
+          t1: apiMatch.t1,
+          t1s : apiMatch.t1s,
+          t2: apiMatch.t2,
+          t2s : apiMatch.t2s,
+          status: apiMatch.status,
+        }
+      }
+    });
+  }
+
+  private extractScore(scoreString: string): number {
+    const score = scoreString.split('/')[0];
+    return parseInt(score, 10);
+  }
+
+  private determineWinner(
+    fixture: string,
+    team1Score: number,
+    team2Score: number
+  ): string {
+    return team1Score > team2Score
+      ? fixture.split(' ')[0]
+      : fixture.split(' ')[2];
+  }
+
+  private generalizeApiData(apiMatch: any, localMatch: any) {
+    const localTeam2 = localMatch.fixture.split(' ')[2];
+
+    // Check if t1 from API matches localTeam1 or localTeam2
+    if (apiMatch.t1.includes(localTeam2)) {
+      // If t1 matches localTeam1 or localTeam2, swap t1 and t2
+      [apiMatch.t1, apiMatch.t2] = [apiMatch.t2, apiMatch.t1];
+      [apiMatch.t1s, apiMatch.t2s] = [apiMatch.t2s, apiMatch.t1s];
+    }
+  }
 }

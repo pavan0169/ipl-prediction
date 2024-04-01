@@ -147,7 +147,7 @@ export class MatchCardComponent implements OnInit {
     const currentYear = new Date().getFullYear();
     const istDateTimeString = `${dom} ${currentYear} ${time}`;
     const istDateTime = new Date(istDateTimeString.replace(/-/g, '/').replace('IST', '+0530'));
-    istDateTime.setHours(istDateTime.getHours() - 5);
+    istDateTime.setHours(istDateTime.getHours() - 1);
   //   const localTime = istDateTime.toLocaleString(undefined, {
   //     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
   // });

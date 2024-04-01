@@ -101,12 +101,11 @@ export class DashboardService {
     return result;
   }
 
-  matchWiseBreakup(predictions: any[]): any[] {
+  matchWiseBreakup(predictions: any[], matches: any[]): any[] {
     if (predictions.length < 2) {
       predictions = JSON.parse(localStorage.getItem('predictionData')!);
     }
     const dataSource: any[] = [];
-    const matches = this.matchsService.matches;
     const users = this.matchsService.users;
 
     matches.forEach((match) => {
@@ -142,10 +141,11 @@ export class DashboardService {
         dom: match.dom,
         venue: match.venue,
         time: match.time,
+        status: match.status,
         rows: rows
       });
     });
-
+    console.log(dataSource);
     return dataSource;
   }
 
