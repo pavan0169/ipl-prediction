@@ -253,9 +253,9 @@ export class MatchesService {
       dom: 'April 2',
       venue: 'Bengaluru',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'LSG',
+      team1_score: 153,
+      team2_score: 181,
     },
     {
       api_id: '061bbd29-796d-4f46-a11a-c4f07d516a51',
@@ -265,9 +265,9 @@ export class MatchesService {
       dom: 'April 3',
       venue: 'Visakhapatnam',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'KKR',
+      team1_score: 166,
+      team2_score: 272,
     },
     {
       api_id: '9d473b5d-7c92-4bf1-b49d-2f16433841d1',
@@ -277,9 +277,9 @@ export class MatchesService {
       dom: 'April 4',
       venue: 'Ahmedabad',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'PBKS',
+      team1_score: 199,
+      team2_score: 200,
     },
     {
       api_id: '8f87aa4a-5de2-41ab-8f2c-72ce339adcdd',
@@ -289,9 +289,9 @@ export class MatchesService {
       dom: 'April 5',
       venue: 'Hyderabad',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'SRH',
+      team1_score: 166,
+      team2_score: 165,
     },
     {
       api_id: 'c70f7161-236c-4cb9-bad9-cdcbc1061a95',
@@ -301,9 +301,9 @@ export class MatchesService {
       dom: 'April 6',
       venue: 'Jaipur',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'RR',
+      team1_score: 189,
+      team2_score: 183,
     },
     {
       api_id: 'd50a0726-24b5-4023-be51-5fc4d89c75ff',
@@ -313,9 +313,9 @@ export class MatchesService {
       dom: 'April 7',
       venue: 'Mumbai',
       time: '3:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'MI',
+      team1_score: 234,
+      team2_score: 205,
     },
     {
       api_id: '8aac46d6-fdd5-453b-afbf-01b12fda1fc9',
@@ -325,72 +325,48 @@ export class MatchesService {
       dom: 'April 7',
       venue: 'Lucknow',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'LSG',
+      team1_score: 163,
+      team2_score: 130,
     },
     {
-      api_id: '',
-      match_api_name: 'Mumbai Indians vs Delhi Capitals',
-      match_no: 20,
-      fixture: 'MI vs DC',
-      dom: 'April 7',
-      venue: 'Mumbai',
-      time: '3:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
-    },
-    {
-      api_id: '',
-      match_api_name: 'Lucknow Super Giants vs Gujarat Titans',
-      match_no: 21,
-      fixture: 'LSG vs GT',
-      dom: 'April 7',
-      venue: 'Lucknow',
-      time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
-    },
-    {
-      api_id: '',
+      api_id: 'a050895c-7d5b-405e-a369-a645d55def08',
       match_api_name: 'Chennai Super Kings vs Kolkata Knight Riders',
       match_no: 22,
       fixture: 'CSK vs KKR',
       dom: 'April 8',
       venue: 'Chennai',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'CSK',
+      team1_score: 141,
+      team2_score: 137,
     },
     {
-      api_id: '',
+      api_id: '53571720-fa11-4c77-b002-38bd4b873ee9',
       match_api_name: 'Punjab Kings vs Sunrisers Hyderabad',
       match_no: 23,
       fixture: 'PBKS vs SRH',
       dom: 'April 9',
       venue: 'Mohali',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'SRH',
+      team1_score: 180,
+      team2_score: 182,
     },
     {
-      api_id: '',
+      api_id: 'f6e5960e-9836-4ca3-bdde-ef2fa1c8c8d0',
       match_api_name: 'Rajasthan Royals vs Gujarat Titans',
       match_no: 24,
       fixture: 'RR vs GT',
       dom: 'April 10',
       venue: 'Jaipur',
       time: '7:30 PM IST',
-      winning_team: '',
-      team1_score: 0,
-      team2_score: 0,
+      winning_team: 'GT',
+      team1_score: 196,
+      team2_score: 199,
     },
     {
-      api_id: '',
+      api_id: 'ccceb1a6-d1f1-4a4e-ab25-df8204fcad3b',
       match_api_name: 'Mumbai Indians vs Royal Challengers Bangalore',
       match_no: 25,
       fixture: 'MI vs RCB',
@@ -402,7 +378,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '047ce8c5-9727-46a9-9e18-f9efa6b61e0d',
       match_api_name: 'Lucknow Super Giants vs Delhi Capitals',
       match_no: 26,
       fixture: 'LSG vs DC',
@@ -414,7 +390,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '5b968eee-d478-4181-9a20-6c8b51611568',
       match_api_name: 'Punjab Kings vs Rajasthan Royals',
       match_no: 27,
       fixture: 'PBKS vs RR',
@@ -426,7 +402,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '2bd0d867-d19c-49d2-af02-d6bece47264c',
       match_api_name: 'Kolkata Knight Riders vs Lucknow Super Giants',
       match_no: 28,
       fixture: 'KKR vs LSG',
@@ -438,7 +414,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '18998bfa-aabc-48e3-b73e-d15f56493fa6',
       match_api_name: 'Mumbai Indians vs Chennai Super Kings',
       match_no: 29,
       fixture: 'MI vs CSK',
@@ -450,7 +426,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '9fa80370-0f62-4e87-ba77-1d1e925b7281',
       match_api_name: 'Royal Challengers Bangalore vs Sunrisers Hyderabad',
       match_no: 30,
       fixture: 'RCB vs SRH',
@@ -462,7 +438,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '0a606b80-7aa1-4ce8-b4c1-e0de800b3a93',
       match_api_name: 'Gujarat Titans vs Delhi Capitals',
       match_no: 31,
       fixture: 'GT vs DC',
@@ -474,7 +450,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '5cecee1b-6cb4-454d-bb15-bc92477e77f3',
       match_api_name: 'Kolkata Knight Riders vs Rajasthan Royals',
       match_no: 32,
       fixture: 'KKR vs RR',
@@ -486,7 +462,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '444e1d3a-e6b3-455a-a9bc-02814d32f65d',
       match_api_name: 'Punjab Kings vs Mumbai Indians',
       match_no: 33,
       fixture: 'PBKS vs MI',
@@ -498,7 +474,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '7403ce3f-97bb-49ec-a81b-4c9de7a05304',
       match_api_name: 'Lucknow Super Giants vs Chennai Super Kings',
       match_no: 34,
       fixture: 'LSG vs CSK',
@@ -510,7 +486,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'bd9c910e-0166-41ee-a507-9503bc9ad103',
       match_api_name: 'Delhi Capitals vs Sunrisers Hyderabad',
       match_no: 35,
       fixture: 'DC vs SRH',
@@ -522,7 +498,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '6428c90a-d7f5-4b12-a4d0-3456e0c76eb1',
       match_api_name: 'Kolkata Knight Riders vs Royal Challengers Bangalore',
       match_no: 36,
       fixture: 'KKR vs RCB',
@@ -534,7 +510,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '1acfc8ae-c13e-4cf4-9be9-3eec914c3913',
       match_api_name: 'Punjab Kings vs Gujarat Titans',
       match_no: 37,
       fixture: 'PBKS vs GT',
@@ -546,7 +522,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '75b6c439-a160-4ffb-a21f-e0f9bd08b674',
       match_api_name: 'Rajasthan Royals vs Mumbai Indians',
       match_no: 38,
       fixture: 'RR vs MI',
@@ -558,7 +534,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '56a64184-8386-4d66-9e40-d62e49bef2fb',
       match_api_name: 'Chennai Super Kings vs Lucknow Super Giants',
       match_no: 39,
       fixture: 'CSK vs LSG',
@@ -570,7 +546,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '04ac4f8c-0e67-4486-88c9-5d3550dbd3b0',
       match_api_name: 'Delhi Capitals vs Gujarat Titans',
       match_no: 40,
       fixture: 'DC vs GT',
@@ -582,7 +558,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '7f238703-ca73-42e5-9759-f8295e0ba014',
       match_api_name: 'Sunrisers Hyderabad vs Royal Challengers Bangalore',
       match_no: 41,
       fixture: 'SRH vs RCB',
@@ -594,7 +570,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'e908e068-d198-4c25-8907-5383018ae984',
       match_api_name: 'Kolkata Knight Riders vs Punjab Kings',
       match_no: 42,
       fixture: 'KKR vs PBKS',
@@ -606,7 +582,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'e2d7b99c-ef4b-4d3f-8ca2-84a4069dab9f',
       match_api_name: 'Delhi Capitals vs Mumbai Indians',
       match_no: 43,
       fixture: 'DC vs MI',
@@ -618,7 +594,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '7c72cb86-4a16-49a5-b754-6f6e5c162a41',
       match_api_name: 'Lucknow Super Giants vs Rajasthan Royals',
       match_no: 44,
       fixture: 'LSG vs RR',
@@ -630,7 +606,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '14974e63-3022-406d-9287-23c6084ae9ea',
       match_api_name: 'Gujarat Titans vs Royal Challengers Bangalore',
       match_no: 45,
       fixture: 'GT vs RCB',
@@ -642,7 +618,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'a4727d80-0b3b-4bc8-94ed-3836d0027809',
       match_api_name: 'Chennai Super Kings vs Sunrisers Hyderabad',
       match_no: 46,
       fixture: 'CSK vs SRH',
@@ -654,7 +630,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '2bee7b6f-66f0-438d-9513-553e882f9cdf',
       match_api_name: 'Kolkata Knight Riders vs Delhi Capitals',
       match_no: 47,
       fixture: 'KKR vs DC',
@@ -666,7 +642,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '64fc2e09-d415-42d4-a0f8-7e3f237f4f5c',
       match_api_name: 'Lucknow Super Giants vs Mumbai Indians',
       match_no: 48,
       fixture: 'LSG vs MI',
@@ -678,7 +654,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '419929c7-585f-4489-8a0e-20a1dbab36e7',
       match_api_name: 'Chennai Super Kings vs Punjab Kings',
       match_no: 49,
       fixture: 'CSK vs PBKS',
@@ -690,7 +666,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'a3410d30-5eb3-4737-abdb-fcf5b798c8cd',
       match_api_name: 'Sunrisers Hyderabad vs Rajasthan Royals',
       match_no: 50,
       fixture: 'SRH vs RR',
@@ -702,7 +678,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'afc6bbd4-630b-4954-9005-dba9b80405d3',
       match_api_name: 'Mumbai Indians vs Kolkata Knight Riders',
       match_no: 51,
       fixture: 'MI vs KKR',
@@ -714,7 +690,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '1c9d100d-87b0-4147-b3b8-2cf7c59af0e3',
       match_api_name: 'Royal Challengers Bangalore vs Gujarat Titans',
       match_no: 52,
       fixture: 'RCB vs GT',
@@ -726,7 +702,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'caefe54a-b74d-4c76-a084-8ba36d2d8561',
       match_api_name: 'Punjab Kings vs Chennai Super Kings',
       match_no: 53,
       fixture: 'PBKS vs CSK',
@@ -738,7 +714,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '770b4218-4ab1-4224-808b-8df40e54e484',
       match_api_name: 'Lucknow Super Giants vs Kolkata Knight Riders',
       match_no: 54,
       fixture: 'LSG vs KKR',
@@ -750,7 +726,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '2f1b529a-efdc-43e2-8c0f-c8b0c86ff99c',
       match_api_name: 'Mumbai Indians vs Sunrisers Hyderabad',
       match_no: 55,
       fixture: 'MI vs SRH',
@@ -762,7 +738,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '89149d34-79c9-4601-8a5b-90fd0587897a',
       match_api_name: 'Delhi Capitals vs Rajasthan Royals',
       match_no: 56,
       fixture: 'DC vs RR',
@@ -774,7 +750,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '792ed165-d3b1-456f-b281-19bcfcf2608f',
       match_api_name: 'Sunrisers Hyderabad vs Lucknow Super Giants',
       match_no: 57,
       fixture: 'SRH vs LSG',
@@ -786,7 +762,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'f4ffb08a-4d09-4c38-9e16-f9aa32fff698',
       match_api_name: 'Punjab Kings vs Royal Challengers Bangalore',
       match_no: 58,
       fixture: 'PBKS vs RCB',
@@ -798,7 +774,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '2f4d4975-4780-49b6-ae64-86ef4ec6d737',
       match_api_name: 'Gujarat Titans vs Chennai Super Kings',
       match_no: 59,
       fixture: 'GT vs CSK',
@@ -810,7 +786,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'ccfdda50-c391-4012-a741-93717a7705d6',
       match_api_name: 'Kolkata Knight Riders vs Mumbai Indians',
       match_no: 60,
       fixture: 'KKR vs MI',
@@ -822,7 +798,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'e17d7e17-f69a-40e1-8e54-fcfe4c1709a0',
       match_api_name: 'Chennai Super Kings vs Rajasthan Royals',
       match_no: 61,
       fixture: 'CSK vs RR',
@@ -834,7 +810,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '5027af00-3757-4513-8289-c5bab2d9d8ab',
       match_api_name: 'Royal Challengers Bangalore vs Delhi Capitals',
       match_no: 62,
       fixture: 'RCB vs DC',
@@ -846,7 +822,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '8c6e8c82-60fd-478d-8582-58c4cf8009c4',
       match_api_name: 'Gujarat Titans vs Kolkata Knight Riders',
       match_no: 63,
       fixture: 'GT vs KKR',
@@ -858,7 +834,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'b45b8032-fbb8-4793-b783-dbe640ce954f',
       match_api_name: 'Delhi Capitals vs Lucknow Super Giants',
       match_no: 64,
       fixture: 'DC vs LSG',
@@ -870,7 +846,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '7fec4432-07ef-46c3-b120-1d42fdcdc9a0',
       match_api_name: 'Rajasthan Royals vs Punjab Kings',
       match_no: 65,
       fixture: 'RR vs PBKS',
@@ -882,7 +858,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'de20502c-67d9-41f2-9171-fdfe0b5ccb3f',
       match_api_name: 'Sunrisers Hyderabad vs Gujarat Titans',
       match_no: 66,
       fixture: 'SRH vs GT',
@@ -894,7 +870,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: 'd949acff-ab82-476c-bb77-a42d232aa750',
       match_api_name: 'Mumbai Indians vs Lucknow Super Giants',
       match_no: 67,
       fixture: 'MI vs LSG',
@@ -906,7 +882,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '043bb613-d8ee-4287-9ccb-a298a0f9c389',
       match_api_name: 'Royal Challengers Bangalore vs Chennai Super Kings',
       match_no: 68,
       fixture: 'RCB vs CSK',
@@ -918,7 +894,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '3451270e-c250-4497-8be3-3479f18d758e',
       match_api_name: 'Sunrisers Hyderabad vs Punjab Kings',
       match_no: 69,
       fixture: 'SRH vs PBKS',
@@ -930,7 +906,7 @@ export class MatchesService {
       team2_score: 0,
     },
     {
-      api_id: '',
+      api_id: '92121777-d96d-4db8-865f-dda98e85ea85',
       match_api_name: 'Rajasthan Royals vs Kolkata Knight Riders',
       match_no: 70,
       fixture: 'RR vs KKR',
@@ -1013,14 +989,20 @@ export class MatchesService {
         this.generalizeApiData(apiMatch, match);
         match.team1_score = this.extractScore(apiMatch.t1s);
         match.team2_score = this.extractScore(apiMatch.t2s);
-        match.winning_team = !apiMatch.status.includes('won') ? '' : this.determineWinner(match.fixture, match.team1_score, match.team2_score);
+        match.winning_team = !apiMatch.status.includes('won')
+          ? ''
+          : this.determineWinner(
+              match.fixture,
+              match.team1_score,
+              match.team2_score
+            );
         match.status = {
           t1: apiMatch.t1,
-          t1s : apiMatch.t1s,
+          t1s: apiMatch.t1s,
           t2: apiMatch.t2,
-          t2s : apiMatch.t2s,
+          t2s: apiMatch.t2s,
           status: apiMatch.status,
-        }
+        };
       }
     });
   }
