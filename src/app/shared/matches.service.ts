@@ -1009,7 +1009,7 @@ export class MatchesService {
 
   private extractScore(scoreString: string): number {
     const score = scoreString.split('/')[0];
-    return parseInt(score, 10);
+    return score ? parseInt(score, 10) : 0;
   }
 
   private determineWinner(

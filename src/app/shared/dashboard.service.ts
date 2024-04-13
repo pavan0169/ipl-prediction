@@ -172,4 +172,137 @@ export class DashboardService {
     const friday = new Date(today.getTime() + (7 + daysUntilNextFriday) * 24 * 60 * 60 * 1000); // Next Frida
     return date <= friday;
   }
+
+  calculateWeeklyStandings(predictions: any[]): { [week: string]: any[] } {
+    if (predictions.length < 2) {
+      predictions = JSON.parse(localStorage.getItem('predictionData')!);
+    }
+
+    const matches = this.matchsService.matches;
+    const users = this.matchsService.users;
+
+    let weeklyStandings: { [week: string]: any[] } = {};
+
+    for (let match of matches) {
+      if (match.winning_team && match.team1_score && match.team2_score && match.dom) {
+        // Parse the date string into a Date object
+        const matchDateStr = match.dom + ' ' + new Date().getFullYear(); // Adding the current year for parsing
+        const matchDate = new Date(matchDateStr);
+
+        // Calculate the week start and end dates
+        const { weekStart, weekEnd } = this.getWeekStartAndEnd(matchDate);
+
+        let matchPredictions = predictions.filter(prediction => prediction.match_no === match.match_no);
+
+        for (let prediction of matchPredictions) {
+          const teamPoints = this.userPredictionWithMatch(prediction.team_pred, match.winning_team);
+          const scr1Points = this.userPredictionWithScore(prediction.team_1_pred_scr, match.team1_score);
+          const scr2Points = this.userPredictionWithScore(prediction.team_2_pred_scr, match.team2_score);
+
+          const totalMatchPoints = teamPoints + scr1Points + scr2Points;
+
+          const userWeekPoints = {
+            user_id: prediction.user_id,
+            displayName: prediction.displayName,  // Assuming displayName is available in prediction
+            total_points: totalMatchPoints
+          };
+
+          const weekKey = `${weekStart.toDateString()} - ${weekEnd.toDateString()}`;
+
+          if (!weeklyStandings[weekKey]) {
+            weeklyStandings[weekKey] = [];
+          }
+
+          weeklyStandings[weekKey].push(userWeekPoints);
+        }
+      }
+    }
+
+    // Sort users by total points for each week
+    for (let week in weeklyStandings) {
+      weeklyStandings[week].sort((a, b) => b.total_points - a.total_points);
+    }
+    console.log(weeklyStandings);
+    return weeklyStandings;
+  }
+
+  // Helper function to get the week start and end dates
+  getWeekStartAndEnd(date: Date): { weekStart: Date; weekEnd: Date } {
+    const weekStart = new Date(date);
+    weekStart.setDate(date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1)); // Adjust for Sunday
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+    return { weekStart, weekEnd };
+  }
+
+  calculateWeeklySum(predictions: any[]): any[] {
+    if (predictions.length < 2) {
+        predictions = JSON.parse(localStorage.getItem('predictionData')!);
+    }
+
+    const matches = this.matchsService.matches;
+    const users = this.matchsService.users;
+
+    let weeklySum: any[] = [];
+    let weekNo = 1;
+
+    for (let match of matches) {
+        if (match.winning_team && match.team1_score && match.team2_score && match.dom) {
+            // Parse the date string into a Date object
+            const matchDateStr = match.dom + ' ' + new Date().getFullYear(); // Adding the current year for parsing
+            const matchDate = new Date(matchDateStr);
+
+            // Calculate the week start and end dates
+            const { weekStart, weekEnd } = this.getWeekStartAndEnd(matchDate);
+
+            let matchPredictions = predictions.filter(prediction => prediction.match_no === match.match_no);
+
+            for (let prediction of matchPredictions) {
+                const teamPoints = this.userPredictionWithMatch(prediction.team_pred, match.winning_team);
+                const scr1Points = this.userPredictionWithScore(prediction.team_1_pred_scr, match.team1_score);
+                const scr2Points = this.userPredictionWithScore(prediction.team_2_pred_scr, match.team2_score);
+
+                const totalMatchPoints = teamPoints + scr1Points + scr2Points;
+
+                const weekKey = `${weekStart.toDateString()} - ${weekEnd.toDateString()}`;
+
+                const existingWeekIndex = weeklySum.findIndex(item => item.week_id === weekKey);
+                if (existingWeekIndex === -1) {
+                    // If the week is not in the list, add it
+                    weeklySum.push({
+                        week_id: weekKey,
+                        week_no: weekNo++,
+                        players_data: [{
+                            userId: prediction.user_id,
+                            display_name: users.find(user => user.user_id === prediction.user_id)?.displayName,
+                            points: totalMatchPoints
+                        }]
+                    });
+                } else {
+                    // If the week is already in the list, update the player data
+                    const userIndex = weeklySum[existingWeekIndex].players_data.findIndex((player: any) => player.userId === prediction.user_id);
+                    if (userIndex === -1) {
+                        // If the player is not in the list, add it
+                        weeklySum[existingWeekIndex].players_data.push({
+                            userId: prediction.user_id,
+                            display_name: users.find(user => user.user_id === prediction.user_id)?.displayName,
+                            points: totalMatchPoints
+                        });
+                    } else {
+                        // If the player is already in the list, update the points
+                        weeklySum[existingWeekIndex].players_data[userIndex].points += totalMatchPoints;
+                    }
+                }
+            }
+        }
+    }
+    weeklySum.forEach(week => {
+      week.players_data = week.players_data
+      .filter((player: any) => player.display_name) // Filter out entries without display_name
+      .sort((a: any, b: any) => b.points - a.points);
+    });
+    weeklySum.sort((a: any, b: any) => b.week_no - a.week_no);
+    console.log(weeklySum)
+    return weeklySum;
+}
 }
